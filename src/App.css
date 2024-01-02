@@ -1,0 +1,39 @@
+
+
+.register-form{
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+        gap:15px;
+        margin-top: 20px;
+     
+}
+.register-form input{
+    width:200px;
+}
+.select-form{
+    width:100%;
+     border:none; 
+    padding-bottom:10px;
+    outline:none;
+    border-bottom:1px solid #000;
+    font-size: 14px;
+    margin-top: 20px;
+    
+}
+.select-form:hover{
+    border-bottom:1px solid rgb(24, 24, 182);
+}
+.select-form::placeholder{
+    font-size: 18px; 
+}
+option{
+    font-size: 14px;
+    margin-top: 2px;
+}
+.option-category{
+    color:#25476a
+  
+}
