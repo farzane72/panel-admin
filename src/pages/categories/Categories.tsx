@@ -9,11 +9,7 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import { Link } from "react-router-dom";
-
-
 import { useEffect, useState } from "react";
-//------------------------------------------------------------------------------------search
-
 import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
@@ -23,164 +19,217 @@ import Search from "@/components/search/Search";
 import MenuFilter from "@/components/menu/MenuFilter";
 import { usePanel } from "@/contexts/PanelContext";
 import Button from "@mui/material/Button";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import { useNavigate } from "react-router-dom";
+import ToastWithButton from "@/components/toast/ToastWithButton";
+import { useTranslation } from "react-i18next";
+import Loading from "@/components/loading/loading";
 
-
-
-declare module "@mui/material/styles" {
-  interface Palette {
-    ochre: Palette["primary"];
-  }
-
-  interface PaletteOptions {
-    ochre?: PaletteOptions["primary"];
-  }
-}
-
-// Update the Button's color options to include an ochre option
-declare module "@mui/material/Button" {
-  interface ButtonPropsColorOverrides {
-    ochre: true;
-  }
-}
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "#fff",
-    color: "#000",
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  "&:last-child td, &:last-child th": {
-    border: 0,
-  },
-}));
-
-const BoxIcon = styled("div")(({ theme }) => ({
-  display: "flex",
-  justifyContent: "center",
-  //alignContent:"center",
-  alignItems: "center",
-  // padding: "10px 10px",
-  borderRadius: "5px",
-  backgroundColor: "#e7ecf3",
-  color: "#373c43",
-  width: "30px",
-  height: "30px",
-  ":hover ": {
-    color: "#373c43",
-    backgroundColor: "#e6ebf2",
-    borderColor: "#e4e9f2",
-    boxShadow:
-      " 0 0.1rem 0.5rem rgba(225,231,240,.5), 0 0.25rem 1rem rgba(55,60,67,.2)",
-  },
-}));
-
-
-
-const  Categories= () => {
+const Categories = () => {
   //-------------------------------------------------------------------------menu
-  
+
   //--------------------------------------------------------pagination----------
-  const [page, setPage] = useState(1);
-  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value);
-  };
+  // const [page, setPage] = useState(1);
+  // const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+  //   setPage(value);
+  // };
   //-------------------------------------------------------------------------context
-  const { courses, dispatch,categories } = usePanel();
+  const { courses, dispatch, categories, mode, searchResults, language } =
+    usePanel();
+  const navigate = useNavigate();
+  //const {t}=useTranslation()
+  const { t } = useTranslation("categories");
+  //------------------------------------------------------------------------------------
+
+  const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: `${mode === "dark" ? "#343b47" : "#fff"}`,
+      color: `${mode === "dark" ? "#fff" : "#000"}`,
+      textAlign: `${language === "fa" ? "right" : "left"}`,
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14,
+      color: `${mode === "dark" ? "#fff" : "#000"}`,
+      borderBottom: "none",
+      textAlign: `${language === "fa" ? "right" : "left"}`,
+    },
+  }));
+  const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    "&:nth-of-type(odd)": {
+      backgroundColor: `${mode === "dark" ? "#404957" : "#f9fafc"}`,
+    },
+    "&:nth-of-type(even)": {
+      backgroundColor: `${mode === "dark" ? "#343b47" : "#fff"}`,
+    },
+    "&:last-child td, &:last-child th": {
+      border: 0,
+    },
+  }));
+
+  const BoxIcon = styled("div")(({ theme }) => ({
+    display: "flex",
+    justifyContent: "center",
+    //alignContent:"center",
+    alignItems: "center",
+    // padding: "10px 10px",
+    borderRadius: "5px",
+    backgroundColor: "#e7ecf3",
+    color: "#373c43",
+    width: "30px",
+    height: "30px",
+    ":hover ": {
+      color: "#373c43",
+      backgroundColor: "#e6ebf2",
+      borderColor: "#e4e9f2",
+      boxShadow:
+        " 0 0.1rem 0.5rem rgba(225,231,240,.5), 0 0.25rem 1rem rgba(55,60,67,.2)",
+    },
+  }));
+
   //---------------------------------------------------------------------------function
-  console.log(categories);
-  function handleDelete(id: number | string) {
-    privateAxios
-      .delete(`/api/course-category/${id}/`)
-      .then(() => dispatch({ type: "deleteCategory", payload: id }));
-  }
+
+  // function handleDelete(id: number | string) {
+  //   privateAxios
+  //     .delete(`/api/course-category/${id}/`)
+  //     .then(() => dispatch({ type: "deleteCategory", payload: id }));
+  // }
   //-------------------------------------------------------------------------------
- 
+
   return (
     <>
-      <Box sx={{ flexGrow: 1, padding: "20px " }}>
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <Search />
-          </Grid>
-          <Grid item xs={6} sx={{ display: "flex", justifyContent: "end" }}>
-            <MenuFilter />
-          </Grid>
-        </Grid>
-      </Box>
+      {categories.length === 0 && <Loading />}
+
       <Link to="/dashboard/addcategory">
-        <Box sx={{ padding: "20px" }}>
+        <Box
+          sx={{ padding: "20px" }}
+          // onClick={() => {
+          //   dispatch({ type: "statusFormik", payload: "add" });
+          //   navigate("/dashboard/addcategory");
+          // }}
+        >
           <Button
             variant="contained"
-            sx={{ bgcolor: "#25476a", ":hover": { bgcolor: "#25476a" } }}
+            sx={{
+              bgcolor: "#25476a",
+              ":hover": { bgcolor: "#25476a" },
+              color: "#fff",
+            }}
           >
-            Add New Category
+            {t("add-category")}
           </Button>
         </Box>
       </Link>
 
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700, mt: "10px" }} aria-label="customized table">
+        <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
             <TableRow sx={{ borderBottom: "1px solid #000" }}>
-              <StyledTableCell>Id</StyledTableCell>
-              <StyledTableCell>Image</StyledTableCell>
-              <StyledTableCell>Name</StyledTableCell>
-              {/* <StyledTableCell>Teacher</StyledTableCell>
-              <StyledTableCell>Category</StyledTableCell>
-              <StyledTableCell>Duration</StyledTableCell>
-              <StyledTableCell>Price</StyledTableCell> */}
-              <StyledTableCell>Action</StyledTableCell>
+              <StyledTableCell> {t("id")}</StyledTableCell>
+              <StyledTableCell> {t("image")}</StyledTableCell>
+              <StyledTableCell>{t("name")}</StyledTableCell>
+              <StyledTableCell> {t("action")}</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {categories.map((row) => (
-              <StyledTableRow key={row.id}>
-                <StyledTableCell>
-                  {row.id}
-                  
-                </StyledTableCell>
-                <StyledTableCell>
-                  <Avatar
-                    src={row.image as any} 
-                    variant="rounded"
-                  />
-                </StyledTableCell>
-                <StyledTableCell>{row.name}</StyledTableCell>
-                {/* <StyledTableCell>{row.teacher}</StyledTableCell>
-                <StyledTableCell>{row.category}</StyledTableCell>
-                <StyledTableCell>{row.duration}</StyledTableCell>
-                <StyledTableCell>{row.price}</StyledTableCell> */}
-                <StyledTableCell>
-                  <Stack spacing={1} direction="row" sx={{}}>
-                    <BoxIcon onClick={() => handleDelete(row.id)}>
-                      <DeleteOutlineOutlinedIcon
-                        sx={{ width: "20px", height: "20px" }}
-                      />
-                    </BoxIcon>
-                    <BoxIcon sx={{}}>
+            {
+              // searchResults.length > 0
+              //   ? searchResults.map((row) => (
+              //       <StyledTableRow key={row.id}>
+              //         <StyledTableCell>{row.id}</StyledTableCell>
+              //         <StyledTableCell>
+              //           <Avatar src={row.image as any} variant="rounded" />
+              //         </StyledTableCell>
+              //         <StyledTableCell>{row.name} </StyledTableCell>
+              //         <StyledTableCell>
+              //           <Box sx={{ display: "flex",gap:"4px" }}>
+              //             <Box>
+              //               {/* <ToastWithButton
+              //                 id={row.id}
+              //                 title={language==="en"?"Delete Category":"حذف دسته بندی"}
+              //                 question={language==="en"?`Are you sure to delete ${row.name}?`:`آیا از حذف ${row.name} اطمینان دارید؟`}
+              //                 type="category"
+              //               /> */}
+              //                <ToastWithButton
+              //                   id={row.id}
+              //                   title={language==="en"?"Delete Category":"حذف دسته بندی"}
+              //                   question={language==="en"?`Are you sure to delete ${row.name}?`:` آیا از حذف ${row.name} مطمئن هستین؟`}
+              //                   type="category"
+              //                 />
+              //             </Box>
+
+              //             {/* <BoxIcon sx={{}}>
+              //           <EditOutlinedIcon
+              //             sx={{ width: "20px", height: "20px" }}
+              //           />
+              //         </BoxIcon> */}
+              //             <BoxIcon
+              //               onClick={() => {
+              //                 navigate(
+              //                   `/dashboard/categories/singlecategory/${row.id}`
+              //                 );
+              //               }}
+              //             >
+              //               <VisibilityIcon
+              //                 sx={{ width: "20px", height: "20px" }}
+              //               />
+              //             </BoxIcon>
+              //           </Box>
+              //         </StyledTableCell>
+              //       </StyledTableRow>
+              //     ))
+              //   :
+
+              categories.map((row) => (
+                <StyledTableRow key={row.id}>
+                  <StyledTableCell>{row.id}</StyledTableCell>
+                  <StyledTableCell>
+                    <Avatar src={row.image as any} variant="rounded" />
+                  </StyledTableCell>
+                  <StyledTableCell>{row.name}</StyledTableCell>
+                  <StyledTableCell>
+                    <Box sx={{ display: "flex", gap: "4px" }}>
+                      <Box>
+                        <ToastWithButton
+                          id={row.id}
+                          title={
+                            language === "en"
+                              ? "Delete Category"
+                              : "حذف دسته بندی"
+                          }
+                          question={
+                            language === "en"
+                              ? `Are you sure to delete ${row.name}?`
+                              : ` آیا از حذف ${row.name} مطمئن هستین؟`
+                          }
+                          type="category"
+                        />
+                      </Box>
+                      {/* <BoxIcon sx={{}}>
                       <EditOutlinedIcon
                         sx={{ width: "20px", height: "20px" }}
                       />
-                    </BoxIcon>
-                  </Stack>
-                </StyledTableCell>
-              </StyledTableRow>
-            ))}
+                    </BoxIcon> */}
+                      <BoxIcon
+                        onClick={() => {
+                          navigate(
+                            `/dashboard/categories/singlecategory/${row.id}`
+                          );
+                        }}
+                      >
+                        <VisibilityIcon
+                          sx={{ width: "20px", height: "20px" }}
+                        />
+                      </BoxIcon>
+                    </Box>
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))
+            }
           </TableBody>
         </Table>
       </TableContainer>
-      <Box
-        sx={{ display: "flex", justifyContent: "center", marginTop: "30px" }}
-      ></Box>
     </>
   );
 };

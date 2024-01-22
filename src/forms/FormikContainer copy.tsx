@@ -13,8 +13,7 @@ import { usePanel } from "@/contexts/PanelContext";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
-import Input from "./Input";
-import { useTranslation } from "react-i18next";
+
 
 
 
@@ -25,7 +24,7 @@ const FormikContainer: React.FC<AddCourseType> = (props: AddCourseType) => {
   const {mode,language}=usePanel()
   //----------------------------------------------------
   const navigate = useNavigate();
-  const {t}=useTranslation("courses")
+
   //------------------------------formik------prop
   const initialValues: AddCourseType = props;
  
@@ -71,13 +70,12 @@ const FormikContainer: React.FC<AddCourseType> = (props: AddCourseType) => {
         .then(() => {
           dispatch({ type: "editCourse", payload: newFormData });
           setSelectedImage([]);
-         
-          toast.success(`${language === "en" ? "Course edited successfully!" : "دوره با موفقیت ویرایش شد"}` )
+          toast.success('Course edited successfully!')
           navigate("/dashboard/courses");
         })
 
         .catch((error) => console.log(error));
-      
+      //---mishe error hasham inja namayesh dad
     }
     //-----------------------------------------------------------add---------------------------------------
     else {
@@ -86,8 +84,7 @@ const FormikContainer: React.FC<AddCourseType> = (props: AddCourseType) => {
       .then(() => {
         dispatch({ type: "addCourse", payload:newFormData });
         setSelectedImage([]);
-       // toast.success('Course added successfully!' )
-        toast.success(`${language === "en" ? "Course added successfully!" : "دوره جدید با موفقیت اضافه شد"}` )
+        toast.success('Course added successfully!' )
       })
 
       .catch((error) => console.log(error));
@@ -99,14 +96,14 @@ const FormikContainer: React.FC<AddCourseType> = (props: AddCourseType) => {
   };
 
   const validationSchema = Yup.object({
-    title: Yup.string().required(`${t("error-title")}`),
-    price: Yup.number().required(`${t("error-price")}`),
-    teacher: Yup.string().required(`${t("error-teacher")}`),
-    duration: Yup.number().required(`${t("error-duration")}`),
+    title: Yup.string().required("Title is required"),
+    price: Yup.number().required("Price is required"),
+    teacher: Yup.string().required("Teacher is required"),
+    duration: Yup.number().required("Duration is required"),
     // category: Yup.string().required("Category is required"),
-    description: Yup.string().required(`${t("error-description")}`),
-    number_of_chapter: Yup.number().required(`${t("error-numer-of-chapter")}`),
-    number_of_viewer: Yup.number().required(`${t("error-number-of-viewer")}`),
+    description: Yup.string().required("Description is required"),
+    number_of_chapter: Yup.number().required("Number_of_chapter is required"),
+    number_of_viewer: Yup.number().required("Number_of_viewer is required"),
   });
 
   //------------------------------------------
@@ -130,7 +127,7 @@ const FormikContainer: React.FC<AddCourseType> = (props: AddCourseType) => {
             <Grid item xs={12} md={6}>
               <Field
                 id="filled-basic"
-                label={t("title")}
+                label="Title"
                 variant="standard"
                 fullWidth
                 name="title"
@@ -142,26 +139,43 @@ const FormikContainer: React.FC<AddCourseType> = (props: AddCourseType) => {
               
                 sx={{
                   label: {
+                    // fontSize:"16px",
                     color:`${mode==="dark"?"#fff":"#25476a"}` ,
                     textAlign:`${language==="fa"?"right":"left"}`,
                     right:`${language==="fa"&&0}`,
                     "&.MuiFormLabel-root": {
+                      // fontSize:"14px",
                       color:`${mode==="dark"?"#fff":"#25476a"}` ,
-                      transformOrigin:`${language==="fa"?"top right":"top  left"}`,
+                      transformOrigin: "top right",
+                      // position: 'absolute',
+                      // top: '0px',
+                      // right: "0px",
+                     
+                      //textAlign:`${language==="fa"?"right":"left"}`,
+                      //right:"-30px"
+                      
+                    },
+                    '&:focus-within': {
+                      // position: 'absolute',
+                      // top: '-10px',
+                      // left: '-50px',
+                      // transformOrigin: "top right"
                     },
                   },
                     '& .MuiFormHelperText-root.Mui-error': {
-                        textAlign:`${language==="fa"?"right":"left"}`
+                      // backgroundColor: 'blue',
+                       textAlign:"right"
+                      // margin: 10,
                      },
+                 
                 }}
               />
               
             </Grid>
-            {/* <Input  inputName="title" label="Title" /> */}
             <Grid item xs={12} md={6}>
               <Field
                 id="filled-basic"
-                label={t("teacher")}
+                label="Teacher"
                 variant="standard"
                 fullWidth
                 name="teacher"
@@ -171,23 +185,22 @@ const FormikContainer: React.FC<AddCourseType> = (props: AddCourseType) => {
                 sx={{
                   label: {
                     color:`${mode==="dark"?"#fff":"#25476a"}` ,
-                    textAlign:`${language==="fa"?"right":"left"}`,
-                    right:`${language==="fa"&&0}`,
                     "&.MuiFormLabel-root": {
-                      color:`${mode==="dark"?"#fff":"#25476a"}` ,
-                      transformOrigin:`${language==="fa"?"top right":"top  left"}`,
+                    color:`${mode==="dark"?"#fff":"#25476a"}` ,
                     },
                   },
-                    '& .MuiFormHelperText-root.Mui-error': {
-                        textAlign:`${language==="fa"?"right":"left"}`
-                     },
+                  '& .MuiFormHelperText-root.Mui-error': {
+                   // backgroundColor: 'blue',
+                    textAlign:"right"
+                   // margin: 10,
+                  },
                 }}
               />
             </Grid>
             <Grid item xs={12} md={6}>
               <Field
                 id="filled-basic"
-                label={t("price")}
+                label="Price"
                 variant="standard"
                 fullWidth
                 name="price"
@@ -197,16 +210,10 @@ const FormikContainer: React.FC<AddCourseType> = (props: AddCourseType) => {
                 sx={{
                   label: {
                     color:`${mode==="dark"?"#fff":"#25476a"}` ,
-                    textAlign:`${language==="fa"?"right":"left"}`,
-                    right:`${language==="fa"&&0}`,
                     "&.MuiFormLabel-root": {
                       color:`${mode==="dark"?"#fff":"#25476a"}` ,
-                      transformOrigin:`${language==="fa"?"top right":"top  left"}`,
                     },
                   },
-                    '& .MuiFormHelperText-root.Mui-error': {
-                        textAlign:`${language==="fa"?"right":"left"}`
-                     },
                 }}
               />
             </Grid>
@@ -214,7 +221,7 @@ const FormikContainer: React.FC<AddCourseType> = (props: AddCourseType) => {
               <Field
                 id="standard-select-currency"
                 //select
-                label={t("choose")}
+                label="Select"
                 placeholder="Select"
                 name="category"
                 as="select"
@@ -230,7 +237,7 @@ const FormikContainer: React.FC<AddCourseType> = (props: AddCourseType) => {
                   },
                 }}
               >
-                {statusFormik==="add" && <option>{t("choose")}</option>}
+                {statusFormik==="add" && <option>Choose a category</option>}
                 {/* <option>Choose a category</option>  */}
                 {/* <option>{course.category}</option>  */}
                 {categories.map((option) => {
@@ -245,7 +252,7 @@ const FormikContainer: React.FC<AddCourseType> = (props: AddCourseType) => {
             <Grid item xs={12} md={6}>
               <Field
                 id="filled-basic"
-                label={t("duration")}
+                label="Duration"
                 variant="standard"
                 fullWidth
                 name="duration"
@@ -255,16 +262,10 @@ const FormikContainer: React.FC<AddCourseType> = (props: AddCourseType) => {
                 sx={{
                   label: {
                     color:`${mode==="dark"?"#fff":"#25476a"}` ,
-                    textAlign:`${language==="fa"?"right":"left"}`,
-                    right:`${language==="fa"&&0}`,
                     "&.MuiFormLabel-root": {
                       color:`${mode==="dark"?"#fff":"#25476a"}` ,
-                      transformOrigin:`${language==="fa"?"top right":"top  left"}`,
                     },
                   },
-                    '& .MuiFormHelperText-root.Mui-error': {
-                        textAlign:`${language==="fa"?"right":"left"}`
-                     },
                 }}
               />
             </Grid>
@@ -272,7 +273,7 @@ const FormikContainer: React.FC<AddCourseType> = (props: AddCourseType) => {
             <Grid item xs={12} md={6}>
               <Field
                 id="filled-basic"
-                label={t("description")}
+                label="Description"
                 variant="standard"
                 fullWidth
                 name="description"
@@ -284,23 +285,17 @@ const FormikContainer: React.FC<AddCourseType> = (props: AddCourseType) => {
                 sx={{
                   label: {
                     color:`${mode==="dark"?"#fff":"#25476a"}` ,
-                    textAlign:`${language==="fa"?"right":"left"}`,
-                    right:`${language==="fa"&&0}`,
                     "&.MuiFormLabel-root": {
                       color:`${mode==="dark"?"#fff":"#25476a"}` ,
-                      transformOrigin:`${language==="fa"?"top right":"top  left"}`,
                     },
                   },
-                    '& .MuiFormHelperText-root.Mui-error': {
-                        textAlign:`${language==="fa"?"right":"left"}`
-                     },
                 }}
               />
             </Grid>
             <Grid item xs={12} md={6}>
               <Field
                 id="filled-basic"
-                label={t("number-of-viewer")}
+                label="Number of viewer"
                 variant="standard"
                 fullWidth
                 name="number_of_viewer"
@@ -315,23 +310,17 @@ const FormikContainer: React.FC<AddCourseType> = (props: AddCourseType) => {
                 sx={{
                   label: {
                     color:`${mode==="dark"?"#fff":"#25476a"}` ,
-                    textAlign:`${language==="fa"?"right":"left"}`,
-                    right:`${language==="fa"&&0}`,
                     "&.MuiFormLabel-root": {
                       color:`${mode==="dark"?"#fff":"#25476a"}` ,
-                      transformOrigin:`${language==="fa"?"top right":"top  left"}`,
                     },
                   },
-                    '& .MuiFormHelperText-root.Mui-error': {
-                        textAlign:`${language==="fa"?"right":"left"}`
-                     },
                 }}
               />
             </Grid>
             <Grid item xs={12} md={6}>
               <Field
                 id="filled-basic"
-                label={t("number-of-chapter")}
+                label="Number of chapter"
                 variant="standard"
                 fullWidth
                 name="number_of_chapter"
@@ -346,16 +335,10 @@ const FormikContainer: React.FC<AddCourseType> = (props: AddCourseType) => {
                 sx={{
                   label: {
                     color:`${mode==="dark"?"#fff":"#25476a"}` ,
-                    textAlign:`${language==="fa"?"right":"left"}`,
-                    right:`${language==="fa"&&0}`,
                     "&.MuiFormLabel-root": {
                       color:`${mode==="dark"?"#fff":"#25476a"}` ,
-                      transformOrigin:`${language==="fa"?"top right":"top  left"}`,
                     },
                   },
-                    '& .MuiFormHelperText-root.Mui-error': {
-                        textAlign:`${language==="fa"?"right":"left"}`
-                     },
                 }}
               />
             </Grid>
@@ -439,7 +422,7 @@ const FormikContainer: React.FC<AddCourseType> = (props: AddCourseType) => {
                 type="submit"
                 sx={{ bgcolor: "#25476a", ":hover": { bgcolor: "#25476a" } ,color:"#fff"}}
               >
-                {statusFormik === "add" ? `${t("add")}` : `${t("edit")}`}
+                {statusFormik === "add" ? "Add" : "Edit"}
               </Button>
             </Box>
           </Box>
@@ -450,8 +433,3 @@ const FormikContainer: React.FC<AddCourseType> = (props: AddCourseType) => {
 };
 
 export default FormikContainer;
-
-
-// '&:focus-within': {
-                      
-// },

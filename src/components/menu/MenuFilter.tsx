@@ -5,6 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { useState } from "react";
 import { usePanel } from "@/contexts/PanelContext";
 import { privateAxios } from "@/services/privateAxios";
+import { useTranslation } from "react-i18next";
 
 interface MenuFilterProps {}
 //GET /posts?_sort=views&_order=asc
@@ -12,7 +13,7 @@ const MenuFilter: React.FunctionComponent<MenuFilterProps> = () => {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-
+  const {t}=useTranslation()
   const {courses,dispatch}=usePanel()
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -27,7 +28,7 @@ const MenuFilter: React.FunctionComponent<MenuFilterProps> = () => {
   const handleClose1 = () => {
     // privateAxios.get(`/api/course-list?_sort=title&_order=des`)
     // .then((res)=>console.log(res))
-    dispatch({type:"statusFilter",payload:"title"})
+    dispatch({type:"statusFilter",payload:"oldest"})
     setAnchorEl(null);
 
     //created_datetime
@@ -37,7 +38,7 @@ const MenuFilter: React.FunctionComponent<MenuFilterProps> = () => {
     // .then((res)=>{console.log(res)
     // dispatch({type:"getCourses", payload: res.data})
     // setAnchorEl(null);})
-    dispatch({type:"statusFilter",payload:"date"})
+    dispatch({type:"statusFilter",payload:"newest"})
     setAnchorEl(null);
     
   };
@@ -56,7 +57,7 @@ const MenuFilter: React.FunctionComponent<MenuFilterProps> = () => {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        Sort by
+        {t("sort")}
       </Button>
       <Menu
         id="basic-menu"
@@ -67,14 +68,14 @@ const MenuFilter: React.FunctionComponent<MenuFilterProps> = () => {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={handleClose1}>Title (asc)</MenuItem>
+        <MenuItem onClick={handleClose1}>
+          {t("title")}
+        </MenuItem>
         <MenuItem onClick={handleClose2}>
-          Date (des)
-         
+          {t("date")}
         </MenuItem>
         <MenuItem onClick={handleClose3}>
-          Default
-         
+        {t("default")}
         </MenuItem>
       </Menu>
     </Box>

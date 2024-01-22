@@ -1,0 +1,42 @@
+{
+    "login":{
+        "login":"Login"
+    },
+    "register":{
+        "register":"Register"
+    },
+    "header":{
+        "language":"Language",
+        "search":"Type for search..."
+        
+    },
+    "sidebar":{
+        "name":"Farzane Jahanpour",
+        "admin":"admin",
+        "dashboard":"Dashboard",
+        "courses":"Courses",
+        "categories":"Categories"
+       
+    },
+    "modal":{
+       
+        "delete":"I'm sure",
+        "cancel":"Cancel"
+
+    },
+    
+    "dashboard-title":"Dashboard",
+    "dashboard-summary":"Welcome back to the Dashboard.",
+    "dashboard-des":"Scroll down to see quick links and overviews of your Server" 
+    
+    ,
+    "sort":"SORT BY",
+    "search":"Search",
+    "default":"Default",
+    "date":"Newest",
+    "title":"Oldest"
+}
+    
+  
+
+ 

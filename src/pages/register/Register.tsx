@@ -5,18 +5,16 @@ import TextField from "@mui/material/TextField";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import { useState } from "react";
-import IconButton from "@mui/material/IconButton";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import InputAdornment from "@mui/material/InputAdornment";
-import FormControl from "@mui/material/FormControl";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import Input from "@mui/material/Input";
-import { Formik, Form, FormikHelpers, useFormikContext, Field } from "formik";
-//import {  ErrorMessage } from "formik";
-// import FormHelperText from "@mui/material/FormHelperText";
+// import IconButton from "@mui/material/IconButton";
+// import OutlinedInput from "@mui/material/OutlinedInput";
+// import InputLabel from "@mui/material/InputLabel";
+// import InputAdornment from "@mui/material/InputAdornment";
+// import FormControl from "@mui/material/FormControl";
+// import Visibility from "@mui/icons-material/Visibility";
+// import VisibilityOff from "@mui/icons-material/VisibilityOff";
 // import Input from "@mui/material/Input";
+import { Formik, Form, FormikHelpers, useFormikContext, Field } from "formik";
+
 import { publicAxios } from "@/services/publicAxios";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
@@ -28,9 +26,11 @@ const ColorButton = styled(Button)({
   //marginTop: "50px",
   position: "absolute",
 
+
   bottom: "-150px",
-  right: "-20px",
-  width: "100%",
+ // right: "10px",
+  left:"25px",
+  width: "90%",
   "&:hover": {
     backgroundColor: "#1f3c5a",
     borderColor: "#1e3955",
@@ -251,7 +251,7 @@ const Register: React.FunctionComponent<RegisterProps> = () => {
                     }}
                   />
 
-                  <Box>
+                  <Box >
                     <ColorButton type="submit">Register</ColorButton>
                   </Box>
                 </Form>

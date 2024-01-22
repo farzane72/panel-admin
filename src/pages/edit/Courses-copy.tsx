@@ -232,19 +232,19 @@ const Courses: React.FunctionComponent<CoursesProps> = () => {
       });
     }
 
-    if (statusFilter === "oldest") {
+    if (statusFilter === "title") {
       privateAxios
-        .get(`/api/course-list?_sort=created_datetime&_order=asc&page=${page}&limit=5`)
+        .get(`/api/course-list?_sort=title&_order=des&page=${page}&limit=5`)
         .then((res) => {
           console.log("title", res);
           dispatch({ type: "getCourses", payload: res.data.results });
         });
     }
 
-    if (statusFilter === "newest") {
+    if (statusFilter === "date") {
       privateAxios
         .get(
-          `/api/course-list?_sort=created_datetime&_order=desc&page=${page}&limit=5`
+          `/api/course-list?_sort=created_datetime&_order=asc&page=${page}&limit=5`
         )
         .then((res) => {
           console.log("date", res.data.results);
@@ -264,130 +264,127 @@ const Courses: React.FunctionComponent<CoursesProps> = () => {
   const navigate = useNavigate();
   return (
     <>
-      <Stack>
-        <Box sx={{ flexGrow: 1, padding: "20px " }}>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <Search />
-            </Grid>
-            <Grid item xs={6} sx={{ display: "flex", justifyContent: "end" }}>
-              <MenuFilter />
-            </Grid>
+    {courses.length>0 ?
+
+    <div>kk</div>
+    :
+    <div>kk</div>
+    }
+    <Stack>
+      <Box sx={{ flexGrow: 1, padding: "20px " }}>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <Search />
           </Grid>
-        </Box>
-        <Box
-          sx={{ padding: "20px" }}
-          onClick={() => {
-            dispatch({ type: "statusFormik", payload: "add" });
-            navigate("/dashboard/addcourse");
+          <Grid item xs={6} sx={{ display: "flex", justifyContent: "end" }}>
+            <MenuFilter />
+          </Grid>
+        </Grid>
+      </Box>
+      <Box
+        sx={{ padding: "20px" }}
+        onClick={() => {
+          dispatch({ type: "statusFormik", payload: "add" });
+          navigate("/dashboard/addcourse");
+        }}
+      >
+        <Button
+          variant="contained"
+          sx={{
+            bgcolor: "#25476a",
+            ":hover": { bgcolor: "#25476a" },
+            color: "#fff",
           }}
         >
-          <Button
-            variant="contained"
-            sx={{
-              bgcolor: "#25476a",
-              ":hover": { bgcolor: "#25476a" },
-              color: "#fff",
-            }}
-          >
-            {t("add-course")}
-          </Button>
-        </Box>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 700 }} aria-label="customized table">
-              <TableHead>
-                <TableRow sx={{ borderBottom: "1px solid #000" }}>
-                  <StyledTableCell>{t("id")} </StyledTableCell>
-                  <StyledTableCell>{t("image")}</StyledTableCell>
-                  <StyledTableCell>{t("title")}</StyledTableCell>
-                  <StyledTableCell>{t("teacher")}</StyledTableCell>
-                  <StyledTableCell>{t("category")}</StyledTableCell>
-                  <StyledTableCell>{t("duration")}</StyledTableCell>
-                  <StyledTableCell>{t("price")}</StyledTableCell>
-                  <StyledTableCell>{t("action")}</StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {searchResults.length === 0 && courses.length === 0 ? (
-                  <Loading />
-                ) : searchResults.length > 0 ? (
-                  searchResults.map((row) => (
-                    <StyledTableRow key={row.id}>
-                      <StyledTableCell>{row.id}</StyledTableCell>
-                      <StyledTableCell>
-                        <Avatar
-                          // alt="Aemy Sharp"
-                          src={
-                            row.images.length === 0 ? "" : row.images[0].image
-                          }
-                          variant="rounded"
-                        />
-                      </StyledTableCell>
-                      <StyledTableCell>{row.title}</StyledTableCell>
-                      <StyledTableCell>{row.teacher}</StyledTableCell>
-                      <StyledTableCell>{row.category}</StyledTableCell>
-                      <StyledTableCell>{row.duration}</StyledTableCell>
-                      <StyledTableCell>{row.price}</StyledTableCell>
-                      <StyledTableCell>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            gap: "4px",
-                            alignItems: "center",
-                          }}
-                        >
-                          <Box>
+          {t("add-course")}
+        </Button>
+      </Box>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 700 }} aria-label="customized table">
+            <TableHead>
+              <TableRow sx={{ borderBottom: "1px solid #000" }}>
+                <StyledTableCell>{t("id")} </StyledTableCell>
+                <StyledTableCell>{t("image")}</StyledTableCell>
+                <StyledTableCell>{t("title")}</StyledTableCell>
+                <StyledTableCell>{t("teacher")}</StyledTableCell>
+                <StyledTableCell>{t("category")}</StyledTableCell>
+                <StyledTableCell>{t("duration")}</StyledTableCell>
+                <StyledTableCell>{t("price")}</StyledTableCell>
+                <StyledTableCell>{t("action")}</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {
+                searchResults.length > 0
+                  ? searchResults.map((row) => (
+                      <StyledTableRow key={row.id}>
+                        <StyledTableCell>{row.id}</StyledTableCell>
+                        <StyledTableCell>
+                          <Avatar
+                            // alt="Aemy Sharp"
+                            src={
+                              row.images.length === 0 ? "" : row.images[0].image
+                            }
+                            variant="rounded"
+                          />
+                        </StyledTableCell>
+                        <StyledTableCell>{row.title}</StyledTableCell>
+                        <StyledTableCell>{row.teacher}</StyledTableCell>
+                        <StyledTableCell>{row.category}</StyledTableCell>
+                        <StyledTableCell>{row.duration}</StyledTableCell>
+                        <StyledTableCell>{row.price}</StyledTableCell>
+                        <StyledTableCell>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              gap: "4px",
+                              alignItems: "center",
+                            }}
+                          >
                             <ToastWithButton
                               id={row.id}
-                              title={
-                                language === "en" ? "Delete Course" : "حذف دوره"
-                              }
-                              question={
-                                language === "en"
-                                  ? `Are you sure to delete ${row.title}?`
-                                  : ` آیا از حذف ${row.title} مطمئن هستین؟`
-                              }
-                              type="search"
+                              title="Delete Course"
+                              question={`Are you sure to delete ${row.title}?`}
+                              type="course"
                             />
+                            <BoxIcon
+                              sx={{ margin: "5px" }}
+                              onClick={() => {
+                                dispatch({
+                                  type: "statusFormik",
+                                  payload: "edit",
+                                });
+                                navigate(`/dashboard/editcourse/${row.id}`);
+                              }}
+                            >
+                              <EditOutlinedIcon
+                                sx={{ width: "20px", height: "20px" }}
+                              />
+                            </BoxIcon>
+                            <BoxIcon
+                              sx={{ margin: "5px" }}
+                              onClick={() => {
+                                navigate(
+                                  `/dashboard/courses/singlecourse/${row.id}`
+                                );
+                              }}
+                            >
+                              <VisibilityIcon
+                                sx={{ width: "20px", height: "20px" }}
+                              />
+                            </BoxIcon>
                           </Box>
-                          <BoxIcon
-                            sx={{ margin: "5px" }}
-                            onClick={() => {
-                              dispatch({
-                                type: "statusFormik",
-                                payload: "edit",
-                              });
-                              navigate(`/dashboard/editcourse/${row.id}`);
-                            }}
-                          >
-                            <EditOutlinedIcon
-                              sx={{ width: "20px", height: "20px" }}
-                            />
-                          </BoxIcon>
-                          <BoxIcon
-                            sx={{ margin: "5px" }}
-                            onClick={() => {
-                              navigate(
-                                `/dashboard/courses/singlecourse/${row.id}`
-                              );
-                            }}
-                          >
-                            <VisibilityIcon
-                              sx={{ width: "20px", height: "20px" }}
-                            />
-                          </BoxIcon>
-                        </Box>
-                      </StyledTableCell>
-                    </StyledTableRow>
-                  ))
-                ) : courses.length > 0 ? (
-                  courses.map((row) => (
-                    <StyledTableRow key={row.id}>
-                      <StyledTableCell>
-                        {row.id}
-                        {/* <Box
+                        </StyledTableCell>
+                      </StyledTableRow>
+                    ))
+                  : //courses.length>0?
+                    courses.map((row) => (
+                      <StyledTableRow key={row.id}>
+                        <StyledTableCell>
+                          {row.id}
+                          {/* <Box
                     sx={{ display: "flex", alignItems: "center", gap: "20px" }}
                   >
                     {row.id}
@@ -399,24 +396,24 @@ const Courses: React.FunctionComponent<CoursesProps> = () => {
                     />
                     {row.title}
                   </Box> */}
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        <Avatar
-                          // alt="Aemy Sharp"
-                          src={
-                            row.images.length === 0 ? "" : row.images[0].image
-                          }
-                          variant="rounded"
-                        />
-                      </StyledTableCell>
-                      <StyledTableCell>{row.title}</StyledTableCell>
-                      <StyledTableCell>{row.teacher}</StyledTableCell>
-                      <StyledTableCell>{row.category}</StyledTableCell>
-                      <StyledTableCell>{row.duration}</StyledTableCell>
-                      <StyledTableCell>{row.price}</StyledTableCell>
-                      <StyledTableCell>
-                        <Box sx={{ display: "flex", gap: "4px" }}>
-                          {/* <BoxIcon onClick={() => handleDelete(row.id,row.title)
+                        </StyledTableCell>
+                        <StyledTableCell>
+                          <Avatar
+                            // alt="Aemy Sharp"
+                            src={
+                              row.images.length === 0 ? "" : row.images[0].image
+                            }
+                            variant="rounded"
+                          />
+                        </StyledTableCell>
+                        <StyledTableCell>{row.title}</StyledTableCell>
+                        <StyledTableCell>{row.teacher}</StyledTableCell>
+                        <StyledTableCell>{row.category}</StyledTableCell>
+                        <StyledTableCell>{row.duration}</StyledTableCell>
+                        <StyledTableCell>{row.price}</StyledTableCell>
+                        <StyledTableCell>
+                          <Box sx={{ display: "flex", gap: "4px" }}>
+                            {/* <BoxIcon onClick={() => handleDelete(row.id,row.title)
                     
                     
                     
@@ -429,87 +426,89 @@ const Courses: React.FunctionComponent<CoursesProps> = () => {
                       />
                     </BoxIcon> */}
 
-                          <Box>
-                            <ToastWithButton
-                              id={row.id}
-                              title={
-                                language === "en" ? "Delete Course" : "حذف دوره"
-                              }
-                              question={
-                                language === "en"
-                                  ? `Are you sure to delete ${row.title}?`
-                                  : ` آیا از حذف ${row.title} مطمئن هستین؟`
-                              }
-                              type="course"
-                            />
+                            <Box>
+                              <ToastWithButton
+                                id={row.id}
+                                title={
+                                  language === "en"
+                                    ? "Delete Course"
+                                    : "حذف دوره"
+                                }
+                                question={
+                                  language === "en"
+                                    ? `Are you sure to delete ${row.title}?`
+                                    : ` آیا از حذف ${row.title} مطمئن هستین؟`
+                                }
+                                type="course"
+                              />
+                            </Box>
+
+                            {/* marginLeft:`${language==="en"&&"8px"}` */}
+                            <BoxIcon
+                              // sx={{paddingRight:`${language==="fa"&&"5px"}`,}}
+
+                              onClick={() => {
+                                dispatch({
+                                  type: "statusFormik",
+                                  payload: "edit",
+                                });
+                                navigate(`/dashboard/editcourse/${row.id}`);
+                              }}
+                            >
+                              <EditOutlinedIcon
+                                sx={{ width: "20px", height: "20px" }}
+                              />
+                            </BoxIcon>
+                            <BoxIcon
+                              onClick={() => {
+                                navigate(
+                                  `/dashboard/courses/singlecourse/${row.id}`
+                                );
+                              }}
+                            >
+                              <VisibilityIcon
+                                sx={{ width: "20px", height: "20px" }}
+                              />
+                            </BoxIcon>
                           </Box>
-
-                          {/* marginLeft:`${language==="en"&&"8px"}` */}
-                          <BoxIcon
-                            // sx={{paddingRight:`${language==="fa"&&"5px"}`,}}
-
-                            onClick={() => {
-                              dispatch({
-                                type: "statusFormik",
-                                payload: "edit",
-                              });
-                              navigate(`/dashboard/editcourse/${row.id}`);
-                            }}
-                          >
-                            <EditOutlinedIcon
-                              sx={{ width: "20px", height: "20px" }}
-                            />
-                          </BoxIcon>
-                          <BoxIcon
-                            onClick={() => {
-                              navigate(
-                                `/dashboard/courses/singlecourse/${row.id}`
-                              );
-                            }}
-                          >
-                            <VisibilityIcon
-                              sx={{ width: "20px", height: "20px" }}
-                            />
-                          </BoxIcon>
-                        </Box>
-                      </StyledTableCell>
-                    </StyledTableRow>
-                  ))
-                ) : (
-                  <Loading />
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </ThemeProvider>
-        <Box
+                        </StyledTableCell>
+                      </StyledTableRow>
+                    ))
+                //:
+                //<Loading />
+              }
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </ThemeProvider>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "30px",
+          marginBottom: "30px",
+          gap: "10px",
+          alignItems: "center",
+          direction: "ltr",
+        }}
+      >
+        <Typography
           sx={{
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "30px",
-            marginBottom: "30px",
-            gap: "10px",
-            alignItems: "center",
-            direction: "ltr",
+            color: `${mode === "dark" ? "#ffff" : "#000"}`,
+            display: `${language === "fa" ? "none" : "block"}`,
           }}
         >
-          <Typography
-            sx={{
-              color: `${mode === "dark" ? "#ffff" : "#000"}`,
-              display: `${language === "fa" ? "none" : "block"}`,
-            }}
-          >
-            Page: {page}
-          </Typography>
-          <Pagination
-            count={7}
-            page={page}
-            onChange={handleChange}
-            variant="outlined"
-            shape="rounded"
-          />
-        </Box>
-      </Stack>
+          Page: {page}
+        </Typography>
+        <Pagination
+          count={7}
+          page={page}
+          onChange={handleChange}
+          variant="outlined"
+          shape="rounded"
+        />
+      </Box>
+    </Stack>
     </>
   );
 };

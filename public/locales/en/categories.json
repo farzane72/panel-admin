@@ -1,0 +1,12 @@
+{
+
+    "name":"Name",
+    "id":"Id",
+    "image":"Image",
+    "choose-file":"Choose files",
+    "add-category":"ADD NEW CATEGORY",
+    "add":"ADD",
+    "edit":"EDIT",
+    "action":"Action",
+    "error-name":"Name is required"
+}

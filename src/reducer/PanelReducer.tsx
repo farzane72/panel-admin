@@ -1,4 +1,7 @@
 import { CourseType, ActionType, InitialStateType } from "@/types/PanelTypes";
+import useMediaQuery from "@mui/material/useMediaQuery";
+
+//const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
 const initialState: InitialStateType = {
   courses: [],
@@ -6,7 +9,10 @@ const initialState: InitialStateType = {
   statusFormik: "",
   searchResults: [],
   statusFilter: "default",
- 
+  mode: "light",
+  language: localStorage.getItem("language") || "fa",
+  page: 1,
+  searchValue: "",
   //groups: [],
   //statusFormik: "",
 };
@@ -53,13 +59,39 @@ const PanelReducer = (
     case "statusFormik":
       return { ...state, statusFormik: action.payload };
     case "search":
-      return { ...state, searchResults: action.payload };
+      return {
+        ...state,
+        searchResults: action.payload.value,
+        statusFilter: action.payload.type,
+      };
     case "statusFilter":
       return { ...state, statusFilter: action.payload };
-    // case "setGroups":
-    //   return { ...state, groups: action.payload };
-    // case "status":
-    // return { ...state, statusFormik: action.payload };
+    case "mode":
+      return { ...state, mode: action.payload };
+    case "changeLang":
+      return { ...state, language: action.payload };
+    case "page":
+      return { ...state, page: action.payload };
+    case "searchValue":
+      return {
+        ...state,
+        searchValue: action.payload.value,
+        statusFilter: action.payload.type,
+      };
+    case "deleteSearch":
+      return {
+        ...state,
+        searchResults: state.searchResults.filter(
+          (item) => item.id != action.payload
+        ),
+      };
+    case "editSearch":
+      return {
+        ...state,
+        searchResults: state.searchResults.map((item) =>
+          item.id === action.payload.id ? { ...action.payload.data } : item
+        ),
+      };
 
     default:
       throw new Error("you didn't choose any case");

@@ -1,0 +1,30 @@
+{
+    "id":"Id",
+    "title":"Title",
+    "teacher":"Teacher",
+    "image":"Image",
+    "price":"Price",
+    "action":"Action",
+    "duration":"Duration",
+    "category":"Category",
+    "choose":"Choose a category",
+    "description":"Description",
+    "number-of-viewer":"Number of viewer",
+    "number-of-chapter":"Number of Chapter",
+    "choose-file":"Choose files",
+    "add":"ADD",
+    "edit":"EDIT",
+    "rating":"Rating",
+    "add-course":"ADD NEW COURSE",
+    "error-title":"Title is required",
+    "error-price":"Price is required",
+    "error-teacher":"Teacher is required",
+    "error-duration":"Duration is required",
+    "error-description":"Description is required",
+    "error-numer-of-chapter":"Number_of_chapter is required",
+    "error-number-of-viewer":"Number_of_viewer is required",
+    "mount":"Mounts",
+    "money":"$"
+   
+    
+}

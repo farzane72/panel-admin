@@ -5,24 +5,40 @@ import { useState } from "react";
 import { privateAxios } from "@/services/privateAxios";
 import _debounce from "lodash/debounce";
 import { usePanel } from "@/contexts/PanelContext";
+import { useTranslation } from "react-i18next";
+interface SearchProps {
+  type: string;
+}
 
-interface SearchProps {}
+const Search = () => {
+ // const { type } = props;
+  const{t}=useTranslation()
+  const { dispatch, searchResults,language,mode,page,searchValue } = usePanel();
 
-const Search: React.FunctionComponent<SearchProps> = () => {
-  const { dispatch, searchResults } = usePanel();
+  
 
   type DebounceFn<T> = (value: any) => any;
 
   const debouncedFn: DebounceFn<any> = _debounce<any>((value: any) => {
-    console.log("test");
-    console.log("Value changed:", value);
+   // console.log("test");
+    // console.log("Value changed:", value);
     if (value === "") {
       dispatch({ type: "search", payload: [] });
     } else {
-      privateAxios.get(`/api/course-list?q=${value.trim()}`).then((res) => {
-        console.log(res.data.results);
-        dispatch({ type: "search", payload: res.data.results });
-      });
+     // if (type === "courses") {
+      //  /api/course-list?_sort=title&_order=des&page=${page}&limit=5
+        privateAxios.get(`/api/course-list?q=${value.trim()}&page=${page}&limit=2`).then((res) => {
+          console.log(res.data.results);
+          dispatch({ type: "search", payload: res.data.results });
+        });
+     // }
+      // if(type === "categories"){
+      //   privateAxios.get(`/api/course-category?q=${value.trim()}`).then((res) => {
+      //     console.log(res.data.results);
+      //    // dispatch({ type: "search", payload: res.data.results });
+      //   });
+
+      // }
     }
 
     // GetContacts({endPoint:`contacts?q=${value.trim()}`
@@ -34,11 +50,13 @@ const Search: React.FunctionComponent<SearchProps> = () => {
   // const [value, setValue] = useState("");
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     // setValue(event.target.value);
-    debouncedFn(event.target.value);
+    dispatch({type:"searchValue",payload:{value:event.target.value,type:"search"}})
+   // debouncedFn(event.target.value);
   };
   return (
-    <Box>
+    <Box sx={{textAlign:`${language==="fa"?"right":"left"}`}}>
       <Autocomplete
+        
         freeSolo
         id="free-solo-2-demo"
         disableClearable
@@ -46,12 +64,31 @@ const Search: React.FunctionComponent<SearchProps> = () => {
         renderInput={(params) => (
           <TextField
             {...params}
-            label="Search input"
+            label={t("search")}
             InputProps={{
               ...params.InputProps,
               type: "search",
             }}
             onChange={handleChange}
+            
+            sx={{
+              label: {
+               // color:`${mode==="dark"?"#fff":"#25476a"}` ,
+                textAlign:`${language==="fa"?"right":"left"}`,
+                right:`${language==="fa"&&"25px"}`,
+                "&.MuiFormLabel-root": {
+                 // color:`${mode==="dark"?"#fff":"#25476a"}` ,
+                  transformOrigin:`${language==="fa"?"top right":"top  left"}`,
+                  textAlign:`${language==="fa"?"right":"left"}`,
+                },
+              },
+                "& .MuiOutlinedInput-root fieldset": {
+                  textAlign:`${language==="fa"?"right":"left"}`,
+                },
+             
+                
+            }}
+           // sx={{textAlign:`${language==="fa"?"right":"left"}`}}
           />
         )}
       />

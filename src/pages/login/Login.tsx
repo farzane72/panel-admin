@@ -9,6 +9,7 @@ import { Formik, Form, FormikHelpers, Field } from "formik";
 import { publicAxios } from "@/services/publicAxios";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
+import Stack from "@mui/material/Stack";
 
 interface RegisterProps {}
 const ColorButton = styled(Button)({
@@ -18,8 +19,8 @@ const ColorButton = styled(Button)({
   position: "absolute",
 
   bottom: "-100px",
-  right: "-20px",
-  width: "100%",
+  left:"25px",
+  width: "90%",
   "&:hover": {
     backgroundColor: "#1f3c5a",
     borderColor: "#1e3955",
@@ -64,6 +65,7 @@ const Login: React.FunctionComponent<RegisterProps> = () => {
      .then((res)=>{
         localStorage.setItem("accessToken",res.data.access)
         localStorage.setItem("refreshToken",res.data.refresh)
+        navigate("/dashboard")
         }
      )
      .catch(error=>console.log(error))
@@ -192,9 +194,9 @@ const Login: React.FunctionComponent<RegisterProps> = () => {
                   </Field>
                 
 
-                  <Box>
+                  <Stack >
                     <ColorButton type="submit">LOGIN</ColorButton>
-                  </Box>
+                  </Stack>
                 </Form>
               </Box>
             )}

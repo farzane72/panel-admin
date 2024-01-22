@@ -1,0 +1,44 @@
+{
+    "login":{
+        "login":"ورود"
+    },
+    "register":{
+        "register":"ثبت نام"
+    },
+   
+    "header":{
+        "language":"انتخاب زبان",
+        "search":"جستجو کنید..."
+        
+    },
+    "sidebar":{
+        "name":"فرزانه جهانپور",
+        "admin":"مدیر",
+        "dashboard":"میز کار",
+        "courses":"دوره ها",
+        "categories":" دسته بندی ها"
+       
+    },
+    "modal":{
+       
+        "delete":"مطمئن هستم",
+        "cancel":"خیر"
+
+    },
+    
+    "dashboard-title":"پنل ادمین",
+    "dashboard-summary":"به مدیریت سایت خوش آمدید",
+    "dashboard-des":"",
+
+    "sort":"مرتب سازی بر اساس:",
+    "search":"جستجو",
+    "default":"پیش فرض",
+    "date":"جدیدترین",
+    "title":"قدیمی ترین"
+   
+   
+
+   
+}
+
+ 

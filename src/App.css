@@ -16,11 +16,12 @@
 .select-form{
     width:100%;
      border:none; 
-    padding-bottom:10px;
+    padding:5px;
     outline:none;
     border-bottom:1px solid #000;
     font-size: 14px;
     margin-top: 20px;
+    
     
 }
 .select-form:hover{
@@ -37,3 +38,15 @@ option{
     color:#25476a
   
 }
+/* .selectLang{
+    color:"#fff";
+    border-color:"#fff"
+} */
+/* .css-niqf4j-MuiStack-root>:not(style):not(style) {
+    margin:5px
+} */
+
+/* .MuiOutlinedInput-root fieldset {
+    
+    text-align: right;
+  } */

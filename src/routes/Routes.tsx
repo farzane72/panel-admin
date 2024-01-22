@@ -10,14 +10,7 @@
  import AddCategory from "@/pages/add/addCategory";
  import EditCourse,{loader as EditCourseLoader } from "@/pages/edit/EditCourse";
  import SingleCourse ,{loader as SingleCourseLoader} from "@/pages/courses/SingleCourse";
-// import Dashboard from "@/pages/dashboard/Dashboard";
-// import DashboardLayout from "@/layout/dashboad-layout/DashboardLayout";
-// import Error from"@/components/error/Error"
-// import Courses from "@/pages/courses/Courses";
-// import Categories from "@/pages/categories/Categories";
-// //import Login from "@/pages/login/Login";
-// import AddCourse from "@/pages/add/AddCourse";
-// import Register from "@/pages/register/Register";
+ import SingleCategory,{loader as SingleCategoryLoader} from "@/pages/categories/SingleCategory";
 
 
  const router=createBrowserRouter([
@@ -79,6 +72,12 @@
                 errorElement:<Error />,
                // loader:ContactsLoader,
                 path: "/dashboard/addcategory"
+            },
+            {
+                element: <SingleCategory />,
+                errorElement:<Error />,
+                loader:SingleCategoryLoader,
+                path: "/dashboard/categories/singlecategory/:categoryId"
             },
           
         ]

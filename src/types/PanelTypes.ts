@@ -38,8 +38,12 @@ export type CourseType = {
     courses: CourseType[];
     categories: GetCategoryType[];
     statusFormik:string
-    searchResults:SingleCourseType[];
+    searchResults:searchResultsType[];
     statusFilter:string;
+    mode:any,
+    language:"fa"|"en"|string,
+    page:number,
+    searchValue:string
    // groups: Group[];
    // statusFormik: string;
   };
@@ -48,9 +52,15 @@ export type CourseType = {
     categories: GetCategoryType[];
     dispatch: Function;
     statusFormik:string;
-    searchResults:SingleCourseType[];
+   // searchResults:SingleCourseType[];
+    searchResults:searchResultsType[];
     statusFilter:string;
-    
+    mode:any,
+    language:"fa"|"en"|string,
+    changeLanguage:()=>{},
+    page:number,
+    searchValue:string
+
   };
   export type PanelProviderType = {
     children: React.ReactNode;
@@ -100,6 +110,24 @@ export type CourseType = {
     rating:number
    // key?:number|string;
   };
+  export type searchResultsType={
+
+    id: any;
+    title: string;
+    teacher:string;
+    price: string;
+    duration:string;
+    images: any[];
+    category:any,
+    description: string;
+    number_of_chapter:string;
+    number_of_viewer: string;
+    upload_images:any
+    rating:number
+    name:string
+    image:any
+
+  }
 
   export type OptionTypes = {
     key: string;

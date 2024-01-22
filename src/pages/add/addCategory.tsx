@@ -15,42 +15,44 @@ import { privateAxios } from "@/services/privateAxios";
 import { ImageType, OptionTypes,AddCategoryType } from "@/types/PanelTypes";
 //import MenuItem from '@mui/material/MenuItem';
 import { usePanel } from "@/contexts/PanelContext";
+import { useTranslation } from "react-i18next";
+import toast from 'react-hot-toast';
 
 const AddCategory = () => {
-  const {categories,dispatch}=usePanel()
-  
+  const {categories,dispatch,mode,language}=usePanel()
+  const {t}=useTranslation("categories")
   
   const [selectedImage, setSelectedImage] = useState<any>("");
-  const [imageUrl, setImageUrl] = useState<string>("");
+  //const [imageUrl, setImageUrl] = useState<string>("");
  // console.log(selectedImage);
-  const handleUploadTest = async (event: any) => {
-    if (!selectedImage) {
-      return;
-    }
+  // const handleUploadTest = async (event: any) => {
+  //   if (!selectedImage) {
+  //     return;
+  //   }
 
-    try {
+  //   try {
       
-      const formData = new FormData();
-      console.log(selectedImage);
-      formData.append("image", selectedImage);
+  //     const formData = new FormData();
+  //     console.log(selectedImage);
+  //     formData.append("image", selectedImage);
 
-      publicAxios
-        .post(`/media/course/course_image/`, formData)
-        .then((res) => console.log(res));
+  //     publicAxios
+  //       .post(`/media/course/course_image/`, formData)
+  //       .then((res) => console.log(res));
 
-      // if (response.ok) {
-      //        const data = await response.json();
-      //        setImageUrl(data.url);
-      //     }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //     // if (response.ok) {
+  //     //        const data = await response.json();
+  //     //        setImageUrl(data.url);
+  //     //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
-  const handleUpload = () => {
-    // Send the selected image file to the server using an HTTP POST request
-    console.log(selectedImage);
-  };
+  // const handleUpload = () => {
+  //   // Send the selected image file to the server using an HTTP POST request
+  //   console.log(selectedImage);
+  // };
 
   //------------------------------formik------
   const initialValues:AddCategoryType = {
@@ -65,19 +67,23 @@ const AddCategory = () => {
     { resetForm, setSubmitting }: FormikHelpers< AddCategoryType>
     
   ) => {
-    console.log(values.name);
+    //console.log(values.name);
     
    
-   console.log(selectedImage);
+   //console.log(selectedImage);
     const formData = new FormData();
      formData.append("image", selectedImage);
      formData.append("name", values.name);
     
      //console.log("object");
-     console.log(formData);
+    // console.log(formData);
      privateAxios.post("/api/course-category/", formData).then(() => {
      
       dispatch({type:"addCategory",payload:formData})
+      setSelectedImage([]);
+       // toast.success('Category added successfully!' )
+      // 
+      toast.success(`${language === "en" ? "Category added successfully!" : "دسته جدید با موفقیت اضافه شد"}` )
     })
     
     .catch(error=>console.log(error))
@@ -97,7 +103,7 @@ const AddCategory = () => {
       // confirmPassword:  Yup.string().required("تکرار رمز اجباری است")
       // .oneOf([Yup.ref("password")], "با رمز برابر نیست")
 
-      .required("Name is required"),
+      .required(`${t("error-name")}`),
     //image: Yup.string().required("Image is required"),
    
   });
@@ -125,23 +131,26 @@ const AddCategory = () => {
               <Grid item xs={12} md={6} >
                 <Field
                   id="filled-basic"
-                  label="Name"
+                  label={t("name")}
                   variant="standard"
                   fullWidth
                   name="name"
                   as={TextField}
                   error={Boolean(errors.name) && Boolean(touched.name)}
-                  //  {errors.name?? ${error}}
                   helperText={Boolean(touched.name) && errors.name}
                   sx={{
                     label: {
-                      // fontSize:"16px",
-                      color: "#25476a",
+                      color:`${mode==="dark"?"#fff":"#25476a"}` ,
+                      textAlign:`${language==="fa"?"right":"left"}`,
+                      right:`${language==="fa"&&0}`,
                       "&.MuiFormLabel-root": {
-                        // fontSize:"14px",
-                        color: "#25476a",
+                        color:`${mode==="dark"?"#fff":"#25476a"}` ,
+                        transformOrigin:`${language==="fa"?"top right":"top  left"}`,
                       },
                     },
+                      '& .MuiFormHelperText-root.Mui-error': {
+                          textAlign:`${language==="fa"?"right":"left"}`
+                       },
                   }}
                 />
               </Grid>
@@ -176,23 +185,25 @@ const AddCategory = () => {
                     setSelectedImage(event.target.files[0]);
                   }}
                 />
-               
+               {
+                selectedImage&&
                 <Avatar
-                  // src={imageUrl}
-                  // src={URL.createObjectURL(selectedImage)}
+                  src={URL.createObjectURL(selectedImage)}
                   alt="Uploaded image"
                   variant="rounded"
                   sx={{ width: 100, height: 100 }}
                 />
-                {/* )} */}
+               }
+                
+               
               </Box>
               <Box>
                 <Button
                   variant="contained"
                   type="submit"
-                  sx={{ bgcolor: "#25476a", ":hover": { bgcolor: "#25476a" } }}
+                  sx={{ bgcolor: "#25476a", ":hover": { bgcolor: "#25476a" ,},color:"#fff" }}
                 >
-                  Submit
+                  {t("add")}
                 </Button>
               </Box>
             </Box>
