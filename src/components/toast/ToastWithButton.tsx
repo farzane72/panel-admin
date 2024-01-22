@@ -6,9 +6,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { styled } from "@mui/material/styles";
-//import { useTranslation } from "react-i18next";
+
 
 interface ToastWithButtonProps {
   id: number | string;
@@ -42,7 +41,7 @@ const BoxIcon = styled("div")(({ theme }) => ({
 const ToastWithButton: React.FunctionComponent<ToastWithButtonProps> = (props) => {
   const { id, title, question,type } = props;
   const { dispatch,language,mode } = usePanel();
-  //const {t}=useTranslation()
+
  
   //-----------------------------------------------------------------------------------------------------
   function callback(id: number | string,title:string) {
@@ -87,7 +86,7 @@ const ToastWithButton: React.FunctionComponent<ToastWithButtonProps> = (props) =
             variant="contained"
             onClick={() => toast.dismiss(t.id)}
             sx={{ bgcolor: "#25476a", ":hover": { bgcolor: "#25476a" },color:"#fff" }}
-           // sx={{marginRight:`${language==="fa"?"8px":0}`,marginLeft:`${language==="en"?"8px":"8px"}`}}
+           
           >
             {language==="en"?"Cancel":"انصراف"}
             

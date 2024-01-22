@@ -85,6 +85,6 @@
 
  ]) 
 
-// ///dashboard/course/add or edit
+ ///dashboard/course/add or edit
 
  export default router;

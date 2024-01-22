@@ -2,56 +2,20 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-//import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
-//import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import { Formik, Form, FormikHelpers, Field } from "formik";
 import * as Yup from "yup";
-//import { AddCourseType } from "@/types/PanelTypes";
-import { publicAxios } from "@/services/publicAxios";
 import { privateAxios } from "@/services/privateAxios";
-import { ImageType, OptionTypes,AddCategoryType } from "@/types/PanelTypes";
-//import MenuItem from '@mui/material/MenuItem';
+import { AddCategoryType } from "@/types/PanelTypes";
 import { usePanel } from "@/contexts/PanelContext";
 
 const EditCategory = () => {
-  const {categories,dispatch}=usePanel()
-  
-  
+  const {dispatch}=usePanel()
   const [selectedImage, setSelectedImage] = useState<any>("");
-  const [imageUrl, setImageUrl] = useState<string>("");
- // console.log(selectedImage);
-  const handleUploadTest = async (event: any) => {
-    if (!selectedImage) {
-      return;
-    }
 
-    try {
-      
-      const formData = new FormData();
-      console.log(selectedImage);
-      formData.append("image", selectedImage);
-
-      publicAxios
-        .post(`/media/course/course_image/`, formData)
-        .then((res) => console.log(res));
-
-      // if (response.ok) {
-      //        const data = await response.json();
-      //        setImageUrl(data.url);
-      //     }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleUpload = () => {
-    // Send the selected image file to the server using an HTTP POST request
-    console.log(selectedImage);
-  };
-
+  
   //------------------------------formik------
   const initialValues:AddCategoryType = {
     //id?: "",
@@ -72,8 +36,6 @@ const EditCategory = () => {
     const formData = new FormData();
      formData.append("image", selectedImage);
      formData.append("name", values.name);
-    
-     //console.log("object");
      console.log(formData);
      privateAxios.post("/api/course-category/", formData).then(() => {
      
@@ -81,7 +43,6 @@ const EditCategory = () => {
     })
     
     .catch(error=>console.log(error))
-  //  ---mishe error hasham inja namayesh dad
     //-------------------------------------------------------
 
     resetForm();
@@ -90,15 +51,7 @@ const EditCategory = () => {
 
   const validationSchema = Yup.object({
     name: Yup.string()
-      //   .required("شماره تماس الزامی می باشد")
-      //   .min(11, "شماره تماس باید ۱۱ رقم باید باشد")
-      //   .max(11, "شماره تماس بایذ ۱۱ رقم باید باشد"),
-      // password: Yup.string().required("This field is requred"),
-      // confirmPassword:  Yup.string().required("تکرار رمز اجباری است")
-      // .oneOf([Yup.ref("password")], "با رمز برابر نیست")
-
       .required("Name is required"),
-    //image: Yup.string().required("Image is required"),
    
   });
 
@@ -106,11 +59,7 @@ const EditCategory = () => {
   return (
     <Stack
       sx={{ marginRight: "30px", marginLeft: "30px", paddingTop: "-20px" }}
-      // direction={"column"}
-      // spacing={2}
-      //component="form"
-      // noValidate
-      //autoComplete="off"
+      
     >
       <Formik
         initialValues={initialValues}
@@ -135,10 +84,9 @@ const EditCategory = () => {
                   helperText={Boolean(touched.name) && errors.name}
                   sx={{
                     label: {
-                      // fontSize:"16px",
+                      
                       color: "#25476a",
                       "&.MuiFormLabel-root": {
-                        // fontSize:"14px",
                         color: "#25476a",
                       },
                     },
@@ -149,7 +97,6 @@ const EditCategory = () => {
             </Grid>
             <Box
               sx={{
-               // paddingTop: "30px",
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
@@ -178,13 +125,11 @@ const EditCategory = () => {
                 />
                
                 <Avatar
-                  // src={imageUrl}
-                  // src={URL.createObjectURL(selectedImage)}
                   alt="Uploaded image"
                   variant="rounded"
                   sx={{ width: 100, height: 100 }}
                 />
-                {/* )} */}
+               
               </Box>
               <Box>
                 <Button

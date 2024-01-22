@@ -4,11 +4,11 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useState } from "react";
 import { usePanel } from "@/contexts/PanelContext";
-import { privateAxios } from "@/services/privateAxios";
+
 import { useTranslation } from "react-i18next";
 
 interface MenuFilterProps {}
-//GET /posts?_sort=views&_order=asc
+
 const MenuFilter: React.FunctionComponent<MenuFilterProps> = () => {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -23,7 +23,6 @@ const MenuFilter: React.FunctionComponent<MenuFilterProps> = () => {
    
     setAnchorEl(null);
 
-    //created_datetime
   }
   const handleClose1 = () => {
     // privateAxios.get(`/api/course-list?_sort=title&_order=des`)
@@ -31,7 +30,6 @@ const MenuFilter: React.FunctionComponent<MenuFilterProps> = () => {
     dispatch({type:"statusFilter",payload:"oldest"})
     setAnchorEl(null);
 
-    //created_datetime
   };
   const handleClose2 = () => {
     // privateAxios.get(`/api/course-list?_sort=created_datetime&_order=asc`)
@@ -46,7 +44,7 @@ const MenuFilter: React.FunctionComponent<MenuFilterProps> = () => {
     dispatch({type:"statusFilter",payload:"default"})
     setAnchorEl(null);
 
-    //created_datetime
+   
   };
   return (
     <Box>

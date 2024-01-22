@@ -15,16 +15,12 @@ export type CourseType = {
     price: number;
     duration: number;
     images: any;
-   // images: ImageType[];
+  
     category:number|string,
-    // description: string;
-    // number_of_chapter: string;
-    // number_of_viewer: string;
-    // upload_images: any[];
-    // key?:number|string;
+    
   };
   export type AddCategoryType = {
-    //id?: number|string
+    
     name: string;
     image:any;
   };
@@ -68,7 +64,6 @@ export type CourseType = {
   
   export type ActionType = {
     type: string;
-    // payload : contactType|number|string|{id:number,data:contactType},
     payload: any;
   };  
 
@@ -80,16 +75,12 @@ export type CourseType = {
     price: string;
     duration:string;
     images: any[];
-   // images:any;
     category:any,
     description: string;
     number_of_chapter:string;
     number_of_viewer: string;
-    //upload_images: ImageType[];
     upload_images:any
-
     rate?:number
-   // key?:number|string;
   };
 
   export type SingleCourseType = {
@@ -104,11 +95,9 @@ export type CourseType = {
     description: string;
     number_of_chapter:string;
     number_of_viewer: string;
-    //upload_images: ImageType[];
     upload_images:any
-
     rating:number
-   // key?:number|string;
+ 
   };
   export type searchResultsType={
 

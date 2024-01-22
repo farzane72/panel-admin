@@ -6,40 +6,24 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import { privateAxios } from "@/services/privateAxios";
-import Search from "@/components/search/Search";
-import MenuFilter from "@/components/menu/MenuFilter";
 import { usePanel } from "@/contexts/PanelContext";
 import Button from "@mui/material/Button";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
 import { useNavigate } from "react-router-dom";
 import ToastWithButton from "@/components/toast/ToastWithButton";
 import { useTranslation } from "react-i18next";
 import Loading from "@/components/loading/loading";
 
 const Categories = () => {
-  //-------------------------------------------------------------------------menu
-
-  //--------------------------------------------------------pagination----------
-  // const [page, setPage] = useState(1);
-  // const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-  //   setPage(value);
-  // };
+  
   //-------------------------------------------------------------------------context
-  const { courses, dispatch, categories, mode, searchResults, language } =
+  const { categories, mode, language } =
     usePanel();
   const navigate = useNavigate();
-  //const {t}=useTranslation()
+  
   const { t } = useTranslation("categories");
   //------------------------------------------------------------------------------------
 
@@ -88,13 +72,7 @@ const Categories = () => {
     },
   }));
 
-  //---------------------------------------------------------------------------function
-
-  // function handleDelete(id: number | string) {
-  //   privateAxios
-  //     .delete(`/api/course-category/${id}/`)
-  //     .then(() => dispatch({ type: "deleteCategory", payload: id }));
-  // }
+  
   //-------------------------------------------------------------------------------
 
   return (
@@ -104,10 +82,7 @@ const Categories = () => {
       <Link to="/dashboard/addcategory">
         <Box
           sx={{ padding: "20px" }}
-          // onClick={() => {
-          //   dispatch({ type: "statusFormik", payload: "add" });
-          //   navigate("/dashboard/addcategory");
-          // }}
+         
         >
           <Button
             variant="contained"
@@ -134,53 +109,7 @@ const Categories = () => {
           </TableHead>
           <TableBody>
             {
-              // searchResults.length > 0
-              //   ? searchResults.map((row) => (
-              //       <StyledTableRow key={row.id}>
-              //         <StyledTableCell>{row.id}</StyledTableCell>
-              //         <StyledTableCell>
-              //           <Avatar src={row.image as any} variant="rounded" />
-              //         </StyledTableCell>
-              //         <StyledTableCell>{row.name} </StyledTableCell>
-              //         <StyledTableCell>
-              //           <Box sx={{ display: "flex",gap:"4px" }}>
-              //             <Box>
-              //               {/* <ToastWithButton
-              //                 id={row.id}
-              //                 title={language==="en"?"Delete Category":"حذف دسته بندی"}
-              //                 question={language==="en"?`Are you sure to delete ${row.name}?`:`آیا از حذف ${row.name} اطمینان دارید؟`}
-              //                 type="category"
-              //               /> */}
-              //                <ToastWithButton
-              //                   id={row.id}
-              //                   title={language==="en"?"Delete Category":"حذف دسته بندی"}
-              //                   question={language==="en"?`Are you sure to delete ${row.name}?`:` آیا از حذف ${row.name} مطمئن هستین؟`}
-              //                   type="category"
-              //                 />
-              //             </Box>
-
-              //             {/* <BoxIcon sx={{}}>
-              //           <EditOutlinedIcon
-              //             sx={{ width: "20px", height: "20px" }}
-              //           />
-              //         </BoxIcon> */}
-              //             <BoxIcon
-              //               onClick={() => {
-              //                 navigate(
-              //                   `/dashboard/categories/singlecategory/${row.id}`
-              //                 );
-              //               }}
-              //             >
-              //               <VisibilityIcon
-              //                 sx={{ width: "20px", height: "20px" }}
-              //               />
-              //             </BoxIcon>
-              //           </Box>
-              //         </StyledTableCell>
-              //       </StyledTableRow>
-              //     ))
-              //   :
-
+              
               categories.map((row) => (
                 <StyledTableRow key={row.id}>
                   <StyledTableCell>{row.id}</StyledTableCell>

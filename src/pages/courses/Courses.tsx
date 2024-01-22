@@ -8,22 +8,11 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import { Link } from "react-router-dom";
-
-//mport Button from "@mui/material/Button";
-//-------------------------------------------------------------------------menu
-//import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import { useEffect, useState } from "react";
-//------------------------------------------------------------------------------------search
-//import TextField from "@mui/material/TextField";
-//import Autocomplete from "@mui/material/Autocomplete";
+import { useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { privateAxios } from "@/services/privateAxios";
-import { publicAxios } from "@/services/publicAxios";
 import Search from "@/components/search/Search";
 import MenuFilter from "@/components/menu/MenuFilter";
 import { usePanel } from "@/contexts/PanelContext";
@@ -31,11 +20,9 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Pagination from "@mui/material/Pagination";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-hot-toast";
 import ToastWithButton from "@/components/toast/ToastWithButton";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-//import { CssBaseline } from'@mui/material/CssBaseline';
 import CssBaseline from "@mui/material/CssBaseline";
 import { useTranslation } from "react-i18next";
 import _debounce from "lodash/debounce";
@@ -43,84 +30,9 @@ import Loading from "@/components/loading/loading";
 
 interface CoursesProps {}
 type DebounceFn<T> = () => any;
-// declare module "@mui/material/styles" {
-//   interface Palette {
-//     ochre: Palette["primary"];
-//   }
-
-//   interface PaletteOptions {
-//     ochre?: PaletteOptions["primary"];
-//   }
-// }
-
-// // Update the Button's color options to include an ochre option
-// declare module "@mui/material/Button" {
-//   interface ButtonPropsColorOverrides {
-//     ochre: true;
-//   }
-// }
-
-// const theme = createTheme({
-//   palette: {
-//     ochre: {
-//       main: "#25476a",
-//       light: "#25476a",
-//       dark: "#25476a",
-//       contrastText: "#fff",
-//     },
-//   },
-// });
-const theme = createTheme({
-  palette: {
-    mode: "dark",
-    background: {
-      default: "#343b47",
-      // paper: '#212121',
-    },
-  },
-});
-
-// function createData(
-//   Id: number,
-//   Title: string,
-//   Teacher: string,
-//   Category: string,
-//   Dutation: string,
-//   Price: number,
-//   Images: []
-// ) {
-//   return { Id,Title,Teacher,Category,Dutation,Price,Images };
-// }
-
-// const rows = [
-//   createData(".././src/assets/images/1.png", "Frozen yoghurt", 159, 6.0, 24),
-//   createData(
-//     ".././src/assets/images/1.png",
-//     "Ice cream sandwich",
-//     237,
-//     9.0,
-//     37
-//   ),
-//   createData(".././src/assets/images/1.png", "Eclair", 262, 16.0, 24),
-//   createData(".././src/assets/images/1.png", "Cupcake", 305, 3.7, 67),
-//   createData(".././src/assets/images/1.png", "Gingerbread", 356, 16.0, 49),
-//   createData(".././src/assets/images/1.png", "protein", 356, 16.0, 78),
-// ];
 
 const Courses: React.FunctionComponent<CoursesProps> = () => {
-  //-------------------------------------------------------------------------menu
-  //   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  //   const open = Boolean(anchorEl);
-  //   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-  //     setAnchorEl(event.currentTarget);
-  //   };
-  //   const handleClose = () => {
-  //     setAnchorEl(null);
-  //   };
-  //--------------------------------------------------------pagination----------
-  // const [page, setPage] = useState(1);
-
-  //-------------------------------------------------------------------------context
+  //-------------------------------------------------context & function-------------------
   const {
     courses,
     dispatch,
@@ -132,99 +44,23 @@ const Courses: React.FunctionComponent<CoursesProps> = () => {
     searchValue,
   } = usePanel();
   const { t } = useTranslation("courses");
-  //---------------------------------------------------------------------------function
+  const navigate = useNavigate();
+  //---------------------------------------------------------------------------function---
   const debouncedFn: DebounceFn<any> = _debounce<any>(() => {
-    //if (searchValue === "") {
-    //dispatch({ type: "search", payload: [] });
-    //} else {
-
     privateAxios
       .get(`/api/course-list?q=${searchValue.trim()}&page=${page}&limit=5`)
       .then((res) => {
-        // dispatch({ type: "search", payload: res.data.results });
         dispatch({
           type: "search",
           payload: { value: res.data.results, type: "search" },
         });
       });
-    // }
   }, 300);
-  //--------------------------------------------------------------------------------------
+  
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    //setPage(value);
     dispatch({ type: "page", payload: value });
   };
-
-  // function handleDelete(id: number | string, title: string) {
-  //   console.log("hello");
-  //   <ToastWithButton
-  //     id={id}
-  //     title="Delete Course"
-  //     question={`Are you sure to delete ${title}?`}
-  //   />;
-  // }
-  //-------------------------------------------------------------------------------
-
-  const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: `${mode === "dark" ? "#343b47" : "#fff"}`,
-      color: `${mode === "dark" ? "#fff" : "#000"}`,
-      textAlign: `${language === "fa" ? "right" : "left"}`,
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-      color: `${mode === "dark" ? "#fff" : "#000"}`,
-      borderBottom: "none",
-      textAlign: `${language === "fa" ? "right" : "left"}`,
-    },
-  }));
-  //#404957
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    "&:nth-of-type(odd)": {
-      //backgroundColor: theme.palette.action.hover,
-      //backgroundColor:`${mode==="dark"?"#404957": theme.palette.action.hover}`  ,
-      backgroundColor: `${mode === "dark" ? "#404957" : "#f9fafc"}`,
-
-      // color: `${mode==="dark"?"#fff":"#000"}`,
-    },
-    "&:nth-of-type(even)": {
-      //backgroundColor: theme.palette.action.hover,
-      backgroundColor: `${mode === "dark" ? "#343b47" : "#fff"}`,
-      // color: `${mode==="dark"?"#fff":"#000"}`,
-    },
-    // hide last border
-    "&:last-child td, &:last-child th": {
-      border: 0,
-    },
-  }));
-
-  const BoxIcon = styled("div")(({ theme }) => ({
-    display: "flex",
-    justifyContent: "center",
-    //alignContent:"center",
-    alignItems: "center",
-    // padding: "10px 10px",
-    // margin:"none",
-    borderRadius: "5px",
-    backgroundColor: "#e7ecf3",
-    color: "#373c43",
-    width: "30px",
-    height: "30px",
-    ":hover ": {
-      color: "#373c43",
-      backgroundColor: "#e6ebf2",
-      borderColor: "#e4e9f2",
-      boxShadow:
-        " 0 0.1rem 0.5rem rgba(225,231,240,.5), 0 0.25rem 1rem rgba(55,60,67,.2)",
-    },
-  }));
-
-  //-------------------------------------------------------------------------------
-
   useEffect(() => {
-    // if (searchValue === "") {
-    //   dispatch({ type: "search", payload: { value: [], type: "default" } });
-    // }
     if (statusFilter === "default") {
       privateAxios.get(`/api/course-list/?page=${page}&limit=5`).then((res) => {
         console.log("test", res.data.results);
@@ -234,7 +70,9 @@ const Courses: React.FunctionComponent<CoursesProps> = () => {
 
     if (statusFilter === "oldest") {
       privateAxios
-        .get(`/api/course-list?_sort=created_datetime&_order=asc&page=${page}&limit=5`)
+        .get(
+          `/api/course-list?_sort=created_datetime&_order=asc&page=${page}&limit=5`
+        )
         .then((res) => {
           console.log("title", res);
           dispatch({ type: "getCourses", payload: res.data.results });
@@ -260,8 +98,65 @@ const Courses: React.FunctionComponent<CoursesProps> = () => {
       //
     }
   }, [dispatch, page, statusFilter, searchValue]);
-  //---------------------------------------------------------------------------------
-  const navigate = useNavigate();
+ 
+ 
+
+  //-------------------------mui style-----------------------------------------------------------------------
+  const theme = createTheme({
+    palette: {
+      mode: "dark",
+      background: {
+        default: "#343b47",
+        // paper: '#212121',
+      },
+    },
+  });
+  const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: `${mode === "dark" ? "#343b47" : "#fff"}`,
+      color: `${mode === "dark" ? "#fff" : "#000"}`,
+      textAlign: `${language === "fa" ? "right" : "left"}`,
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14,
+      color: `${mode === "dark" ? "#fff" : "#000"}`,
+      borderBottom: "none",
+      textAlign: `${language === "fa" ? "right" : "left"}`,
+    },
+  }));
+  //#404957
+  const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    "&:nth-of-type(odd)": {
+      backgroundColor: `${mode === "dark" ? "#404957" : "#f9fafc"}`,
+    },
+    "&:nth-of-type(even)": {
+      backgroundColor: `${mode === "dark" ? "#343b47" : "#fff"}`,
+    },
+    "&:last-child td, &:last-child th": {
+      border: 0,
+    },
+  }));
+
+  const BoxIcon = styled("div")(({ theme }) => ({
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: "5px",
+    backgroundColor: "#e7ecf3",
+    color: "#373c43",
+    width: "30px",
+    height: "30px",
+    ":hover ": {
+      color: "#373c43",
+      backgroundColor: "#e6ebf2",
+      borderColor: "#e4e9f2",
+      boxShadow:
+        " 0 0.1rem 0.5rem rgba(225,231,240,.5), 0 0.25rem 1rem rgba(55,60,67,.2)",
+    },
+  }));
+
+  //-------------------------------------------------------------------------------
+
   return (
     <>
       <Stack>
@@ -385,24 +280,9 @@ const Courses: React.FunctionComponent<CoursesProps> = () => {
                 ) : courses.length > 0 ? (
                   courses.map((row) => (
                     <StyledTableRow key={row.id}>
-                      <StyledTableCell>
-                        {row.id}
-                        {/* <Box
-                    sx={{ display: "flex", alignItems: "center", gap: "20px" }}
-                  >
-                    {row.id}
-
-                    <Avatar
-                      alt="Aemy Sharp"
-                      src={row.images[0].image}
-                      variant="rounded"
-                    />
-                    {row.title}
-                  </Box> */}
-                      </StyledTableCell>
+                      <StyledTableCell>{row.id}</StyledTableCell>
                       <StyledTableCell>
                         <Avatar
-                          // alt="Aemy Sharp"
                           src={
                             row.images.length === 0 ? "" : row.images[0].image
                           }
@@ -416,19 +296,6 @@ const Courses: React.FunctionComponent<CoursesProps> = () => {
                       <StyledTableCell>{row.price}</StyledTableCell>
                       <StyledTableCell>
                         <Box sx={{ display: "flex", gap: "4px" }}>
-                          {/* <BoxIcon onClick={() => handleDelete(row.id,row.title)
-                    
-                    
-                    
-                    
-                    
-                    
-                    }>
-                      <DeleteOutlineOutlinedIcon
-                        sx={{ width: "20px", height: "20px" }}
-                      />
-                    </BoxIcon> */}
-
                           <Box>
                             <ToastWithButton
                               id={row.id}
@@ -443,11 +310,7 @@ const Courses: React.FunctionComponent<CoursesProps> = () => {
                               type="course"
                             />
                           </Box>
-
-                          {/* marginLeft:`${language==="en"&&"8px"}` */}
                           <BoxIcon
-                            // sx={{paddingRight:`${language==="fa"&&"5px"}`,}}
-
                             onClick={() => {
                               dispatch({
                                 type: "statusFormik",

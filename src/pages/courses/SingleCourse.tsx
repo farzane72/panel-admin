@@ -8,11 +8,9 @@ import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
 import { SingleCourseType } from "@/types/PanelTypes";
 import Rating from "@mui/material/Rating";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useTranslation } from "react-i18next";
 //------------------------------------------------------------------------------------------------
-//import { deepOrange, green } from '@mui/material/colors';
-//sx={{ bgcolor: green[500] }}
+
 const SingleCourse = () => {
   const course = useLoaderData() as SingleCourseType;
   const {t}=useTranslation("courses")
@@ -61,20 +59,18 @@ const SingleCourse = () => {
             <span>{t("number-of-chapter")}:</span>
             <span>{course.number_of_chapter}</span>
           </Box>
-          {/* <Stack direction="row" > */}
-          {/* <Box sx={{display:"flex",flexDirection:"column",justifyContent:"center"}}> */}
+         
           <Box>
             <span>{t("number-of-viewer")}:</span>
-            {/* <VisibilityIcon fontSize="large" /> */}
+            
             <span>{course.number_of_viewer}</span>
           </Box>
 
           <Box>
-            {/* <span>Rating:</span>
-            <span>{course.rating}</span> */}
+           
             <Rating name="read-only" value={course.rating} readOnly />
           </Box>
-          {/* </Stack> */}
+          
         </Stack>
       </Grid>
       <Grid item xs={12} md={5} sx={{ marginTop: "50px" }}>

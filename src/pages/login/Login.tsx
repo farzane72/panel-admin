@@ -39,13 +39,14 @@ const Login: React.FunctionComponent<RegisterProps> = () => {
   const [showPassword, setShowPassword] = useState(false);
   
   const navigate=useNavigate()
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  
+  // const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
-  };
+  // const handleMouseDownPassword = (
+  //   event: React.MouseEvent<HTMLButtonElement>
+  // ) => {
+  //   event.preventDefault();
+  // };
 
   const initialValues: FormikValuesType = {
     phone: "",
@@ -201,8 +202,6 @@ const Login: React.FunctionComponent<RegisterProps> = () => {
               </Box>
             )}
           </Formik>
-
-          
         </Paper>
       </Box>
     </Box>

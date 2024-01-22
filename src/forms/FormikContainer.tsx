@@ -13,7 +13,6 @@ import { usePanel } from "@/contexts/PanelContext";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
-import Input from "./Input";
 import { useTranslation } from "react-i18next";
 
 
@@ -114,9 +113,7 @@ const FormikContainer: React.FC<AddCourseType> = (props: AddCourseType) => {
 
   //---------------------------------------------
   return (
-    //const errors = form.errors;
-  //const fieldName = field.name;
-  //const errorStyles = getErrorStyles(errors, fieldName); 
+    
     <Formik
       initialValues={initialValues}
       onSubmit={onSubmit}
@@ -157,7 +154,7 @@ const FormikContainer: React.FC<AddCourseType> = (props: AddCourseType) => {
               />
               
             </Grid>
-            {/* <Input  inputName="title" label="Title" /> */}
+            
             <Grid item xs={12} md={6}>
               <Field
                 id="filled-basic"
@@ -219,8 +216,7 @@ const FormikContainer: React.FC<AddCourseType> = (props: AddCourseType) => {
                 name="category"
                 as="select"
                 className="select-form"
-                // error={Boolean(errors.category) && Boolean(touched.category)}
-                // helperText={Boolean(touched.category) && errors.category}
+               
                 sx={{
                   label: {
                     color:`${mode==="dark"?"#fff":"#25476a"}` ,
@@ -231,8 +227,7 @@ const FormikContainer: React.FC<AddCourseType> = (props: AddCourseType) => {
                 }}
               >
                 {statusFormik==="add" && <option>{t("choose")}</option>}
-                {/* <option>Choose a category</option>  */}
-                {/* <option>{course.category}</option>  */}
+                
                 {categories.map((option) => {
                   return (
                     <option key={option.id} value={option.name}>
@@ -378,16 +373,12 @@ const FormikContainer: React.FC<AddCourseType> = (props: AddCourseType) => {
               }}
             >
               <Field
-                // as={TextField}
+                
                 type="file"
                 name="images"
-               //name="upload_images"
                 multiple
                 onChange={(event: any) => {
                   setSelectedImage([...event.target.files]);
-
-                  console.log(event.target.files);
-                  // setSelectedImage(event.target.files)
                 }}
               />
               {
@@ -451,7 +442,3 @@ const FormikContainer: React.FC<AddCourseType> = (props: AddCourseType) => {
 
 export default FormikContainer;
 
-
-// '&:focus-within': {
-                      
-// },

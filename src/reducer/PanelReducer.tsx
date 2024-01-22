@@ -1,7 +1,5 @@
 import { CourseType, ActionType, InitialStateType } from "@/types/PanelTypes";
-import useMediaQuery from "@mui/material/useMediaQuery";
 
-//const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
 const initialState: InitialStateType = {
   courses: [],
@@ -13,8 +11,7 @@ const initialState: InitialStateType = {
   language: localStorage.getItem("language") || "fa",
   page: 1,
   searchValue: "",
-  //groups: [],
-  //statusFormik: "",
+  
 };
 const PanelReducer = (
   state: InitialStateType,

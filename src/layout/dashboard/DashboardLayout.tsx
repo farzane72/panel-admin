@@ -127,9 +127,3 @@ const DashboardLayout: React.FunctionComponent<DashboardLayoutProps> = () => {
 
 export default DashboardLayout;
 
-//#3d4553 side bar
-
-//#343b47 body
-
-
-//table #434d5b   #afb4bb   border #535f71
